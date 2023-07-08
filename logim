@@ -1,0 +1,101 @@
+import '../../App.css'
+import React, { useState } from 'react';
+
+const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Send login request to the backend API
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const { role } = await response.json();
+
+      // Set the logged-in state and role
+      setLoggedIn(true);
+      setRole(role);
+    } else {
+      // Handle login error
+      console.error('Login failed');
+    }
+  };
+
+  const handleLogout = () => {
+    // Clear the logged-in state and role
+    setLoggedIn(false);
+    setRole('');
+  };
+
+  const renderLoginForm = () => {
+    return (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            Username:
+            <input type="text" value={username} onChange={handleUsernameChange} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password:
+            <input type="password" value={password} onChange={handlePasswordChange} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Role:
+            <select value={role} onChange={handleRoleChange}>
+              <option value="">Select Role</option>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <button type="submit">Log In</button>
+        </div>
+      </form>
+    );
+  };
+
+  const renderContent = () => {
+    if (!loggedIn) {
+      return renderLoginForm();
+    }
+
+    return (
+      <div>
+        <h1>Welcome, {role}!</h1>
+        <button onClick={handleLogout}>Log Out</button>
+      </div>
+    );
+  };
+
+  return <div>{renderContent()}</div>;
+};
+
+export default LoginForm;
+
