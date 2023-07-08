@@ -1,0 +1,158 @@
+
+
+import '../../App.css'
+
+import React, { useState } from 'react';
+
+const RegistrationForm = () => {
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    address: '',
+    city: '',
+    country: '',
+    education: '',
+    pdfFile: null,
+    jpegFile: null,
+    previousExperience: ''
+  });
+
+  const handleChange = (e) => {
+    if (e.target.type === 'file') {
+      setUserData({ ...userData, [e.target.name]: e.target.files[0] });
+    } else {
+      setUserData({ ...userData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform form submission or validation here
+    console.log(userData);
+  };
+
+  return (
+    <div>
+      <h1>Registration Form</h1>
+      <form onSubmit={handleSubmit}>
+        <h3>Personal Information</h3>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={userData.name}
+          onChange={handleChange}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={userData.email}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={userData.password}
+          onChange={handleChange}
+        />
+
+        <h3>Address Information</h3>
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={userData.address}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="city"
+          placeholder="City"
+          value={userData.city}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="country"
+          placeholder="Country"
+          value={userData.country}
+          onChange={handleChange}
+        />
+
+        <h3>Sport Proficiecy</h3>
+        <input
+          type="text"
+          name="sport"
+          placeholder="Sport"
+          value={userData.address}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name=""
+          placeholder="City"
+          value={userData.city}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="country"
+          placeholder="Country"
+          value={userData.country}
+          onChange={handleChange}
+        />
+
+        <h3>Educational Experience</h3>
+        <input
+          type="text"
+          name="education"
+          placeholder="Education"
+          value={userData.education}
+          onChange={handleChange}
+        />
+
+        <h3> </h3>
+        <input
+          type="text"
+          name="education"
+          placeholder="Education"
+          value={userData.education}
+          onChange={handleChange}
+        />
+
+
+        <h3>File Upload</h3>
+        <label htmlFor="pdfFile">PDF File:</label>
+        <input
+          type="file"
+          name="pdfFile"
+          accept=".pdf"
+          onChange={handleChange}
+        />
+
+        <label htmlFor="jpegFile">JPEG File:</label>
+        <input
+          type="file"
+          name="jpegFile"
+          accept="image/jpeg"
+          onChange={handleChange}
+        />
+
+        <h3>Previous Experience</h3>
+        <textarea
+          name="previousExperience"
+          placeholder="Previous experience"
+          value={userData.previousExperience}
+          onChange={handleChange}
+        ></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+};
+
+export default RegistrationForm;
